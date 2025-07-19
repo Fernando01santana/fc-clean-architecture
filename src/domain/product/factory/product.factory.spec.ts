@@ -1,7 +1,8 @@
+import NotificationError from "../../@shared/notification/notification.error";
 import ProductFactory from "./product.factory";
 
 describe("Product factory unit test", () => {
-  it("should create a proct type a", () => {
+  it("should create a product type a", () => {
     const product = ProductFactory.create("a", "Product A", 1);
 
     expect(product.id).toBeDefined();
@@ -10,7 +11,7 @@ describe("Product factory unit test", () => {
     expect(product.constructor.name).toBe("Product");
   });
 
-  it("should create a proct type b", () => {
+  it("should create a product type b", () => {
     const product = ProductFactory.create("b", "Product B", 1);
 
     expect(product.id).toBeDefined();
@@ -23,5 +24,13 @@ describe("Product factory unit test", () => {
     expect(() => ProductFactory.create("c", "Product C", 1)).toThrowError(
       "Product type not supported"
     );
+  });
+
+  it("should throw notification error when creating product type a with invalid data", () => {
+    expect(() => ProductFactory.create("a", "", -1)).toThrow(NotificationError);
+  });
+
+  it("should throw notification error when creating product type b with invalid data", () => {
+    expect(() => ProductFactory.create("b", "", -1)).toThrow(NotificationError);
   });
 });
